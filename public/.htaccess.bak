@@ -14,11 +14,4 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-
-    #Based on link below, avoid dropping Authorization header
-    #https://github.com/tymondesigns/jwt-auth/wiki/Authentication
-    RewriteEngine On
-    RewriteCond %{HTTP:Authorization} ^(.*)
-    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
-
 </IfModule>

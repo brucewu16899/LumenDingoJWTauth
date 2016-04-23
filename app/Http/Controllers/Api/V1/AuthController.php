@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+use Cartalyst\Sentinel\Native\Facades\Sentinel;
+
 class AuthController extends Controller
 {
     use Helpers;
@@ -28,13 +30,19 @@ class AuthController extends Controller
         }
 
         try {
+            //Sentinel stateless login
+            $user = Sentinel::stateless($credentials); 
+             Sentinel::login($user); 
             if (! $token = JWTAuth::attempt($credentials)) {
-                return $this->response->errorUnauthorized();
+                //return $this->response->errorUnauthorized();
+                return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
-            return $this->response->error('could_not_create_token', 500);
+           // return $this->response->error('could_not_create_token', 500);
+            return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        return response()->json(compact('token'));
+        $user->setHidden(['password']);
+        return response()->json([compact('token'), $user]);
     }
 }

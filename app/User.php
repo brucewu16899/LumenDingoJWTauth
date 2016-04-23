@@ -22,4 +22,5 @@ class User extends EloquentUser implements JWTSubject
     {
         return [];
     }
+
 }

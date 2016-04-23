@@ -1,17 +1,11 @@
 {
     "name": "edgji/lumengular",
     "type": "project",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/NicksonYap/sentinel.git"
-        }
-    ],
     "require": {
         "php": ">=5.5.9",
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "~2.2",
-        "cartalyst/sentinel": "dev-hidepassword",
+        "cartalyst/sentinel": "2.0.*",
         "dingo/api": "1.0.x@dev",
         "tymon/jwt-auth": "dev-develop",
         "barryvdh/laravel-cors": "^0.8.0"
