@@ -67,11 +67,12 @@ $app->singleton(
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
-$app->routeMiddleware([
+/*$app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
 	'jwt.auth' => 'Tymon\JWTAuth\Middleware\Authenticate',
     'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
  ]);
+ */
 
 /*
 |--------------------------------------------------------------------------

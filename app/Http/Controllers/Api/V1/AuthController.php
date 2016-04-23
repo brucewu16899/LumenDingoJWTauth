@@ -7,7 +7,7 @@ use Dingo\Api\Exception\ValidationHttpException;
 use Dingo\Api\Routing\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Exceptions\JWTException;
+//use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
@@ -16,8 +16,8 @@ class AuthController extends Controller
 {
     use Helpers;
 
-    public function login(Request $request)
-    {
+    public function login(Request $request){
+
         $credentials = $request->only(['email', 'password']);
 
         $validator = Validator::make($credentials, [
@@ -37,12 +37,33 @@ class AuthController extends Controller
                 //return $this->response->errorUnauthorized();
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
-        } catch (JWTException $e) {
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
            // return $this->response->error('could_not_create_token', 500);
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
         $user->setHidden(['password']);
-        return response()->json([compact('token'), $user]);
+        //return response()->json([compact('token'), $user]);
+        return response()->json(compact('token'));
+    }
+
+
+    public function logout(){
+
+       
+       try {
+           JWTAuth::invalidate(JWTAuth::getToken());
+        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['error' => 'token_expired']);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => 'token_invalid']);
+        } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $e) {
+            return response()->json(['error' => 'token_blacklisted']);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['error' => 'token_absent']);
+        }
+
+       
+        return response()->json(['success' => 'logged out']);
     }
 }
