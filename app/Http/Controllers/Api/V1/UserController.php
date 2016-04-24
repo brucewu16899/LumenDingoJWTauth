@@ -6,7 +6,7 @@
 namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 
-use App\User;
+//use App\User;
 use Illuminate\Http\Request;
 
 
@@ -31,17 +31,27 @@ class UserController extends Controller
 
      public function index(){
   
-        $users  = User::all();
-
+        //$users  = User::all();
+        $users = Sentinel::getUserRepository()->all();
      /*   foreach($users as $user) {
             $user->setHidden(['password']);
         } */
-        return response()->json($users);
+        return response()->json([
+            'success' => ['message' => 'Users indexed.'],
+            'users' => $users,
+        ]);
+        //return response()->json($users);
   
     }
 
     public function get(){
-  
+
+        if (! $user = JWTAuth::parseToken()->authenticate()) {
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('User from token not found.');
+            return response()->json(['error' => ['message' => 'User from token not found.']], 422);
+        }
+        
+            /*
        try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['error' => 'user_not_found']);
@@ -55,19 +65,34 @@ class UserController extends Controller
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
             return response()->json(['error' => 'token_absent']);
         }
-  
-       // $user->setHidden(['password']);
-        return response()->json($user);
+        
+  */
+      //  $user->setHidden(['password']);
+        return response()->json([
+            'success' => ['message' => 'User obtained.'],
+            'user' => $user,
+        ]);
+        //return response()->json($user);
+
+
+    }
+
+    public function getByID($id){
+
+        if(! $user  = Sentinel::findUserById($id)){
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('User from ID not found.');
+            return response()->json(['error' => ['message' => 'User from ID not found.']], 422);
+        }
+        return response()->json([
+            'success' => ['message' => 'User obtained.'],
+            'user' => $user,
+        ]);
+        
     }
   
-    public function create(Request $request){
-  
-        //$user = User::create($request->all());
-       /* $user = new User;
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->save();*/
-
+   public function create(Request $request){
+        $credentials = $request->only(['email', 'password']);
+    
         $rules = [ 
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
@@ -75,62 +100,50 @@ class UserController extends Controller
 
         $messages = [
             'email.unique' => 'unique',
-            'email.required' => 'required',
             'email.email' => 'email',
+            'email.required' => 'required',
             
-            'password.required' => 'required',
             'password.min' => 'min:6',
+            'password.required' => 'required',
         ];
 
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($credentials, $rules, $messages);
 
 
         if ($validator->fails()){
-            return response()->json($validator->errors());
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('Input invalid.', $validator->errors());
+            //return response()->json($validator->errors(), 422);
+             return response()->json([
+                'error' => ['message' => 'Input invalid.'],
+                'validator' => $validator->errors(),
+            ]);
         }
             
-
-
-        $user = Sentinel::registerAndActivate([
+ 
+        /*$credentials = [
             'email'    => $request->input('email'),
             'password' => $request->input('password'),
+        ];*/
+
+        $user = Sentinel::registerAndActivate($credentials);  
+
+        return response()->json([
+            'success' => ['message' => 'User created.'],
+            'user' => $user,
         ]);
-
-      //  $user->setHidden(['password']);
-        return response()->json($user);
-
+        //return response()->json($user);
     }
-  
-    public function delete($id){
-        $user  = User::find($id);
-        $user->delete();
- 
-        return response()->json(['success' => 'deleted']);
-    }
-  
+
     public function update(Request $request){
+        $credentials = $request->only(['email', 'password']);
 
 
-      // $user = JWTAuth::parseToken()->authenticate();
-
-       try {
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['error' => 'user_not_found']);
-            }
-        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['error' => 'token_expired']);
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['error' => 'token_invalid']);
-        } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $e) {
-            return response()->json(['error' => 'token_blacklisted']);
-        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['error' => 'token_absent']);
+        if (! $user = JWTAuth::parseToken()->authenticate()) {
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('User from token not found.');
+            return response()->json(['error' => ['message' => 'User from token not found.']], 422);
         }
 
-    // the token is valid and we have found the user via the sub claim
-    //return response()->json(compact('user'));
-
-
+  
 
         $rules = [ 
             'email' => 'email|unique:users,email,'. $user->id,
@@ -144,11 +157,15 @@ class UserController extends Controller
             'password.min' => 'min:6',
         ];
 
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($credentials, $rules, $messages);
 
 
         if ($validator->fails()){
-            return response()->json($validator->errors());
+            return response()->json([
+                'error' => ['message' => 'Input invalid.'],
+                'validator' => $validator->errors(),
+            ]);
+            //return response()->json($validator->errors());
         }
             
         function appendIfFilled($field, &$request, &$credentials){
@@ -180,20 +197,39 @@ class UserController extends Controller
   */
 
        // $user->setHidden(['password']);
-        return response()->json($user);
+
+        return response()->json([
+            'success' => ['message' => 'User updated.'],
+            'user' => $user,
+        ]);
+        //return response()->json($user);
     }
 
 
-    public function obtainRole($id){
-        
-       
+    public function delete($id){
+        if(! $user  = Sentinel::findUserById($id)){
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('User from ID not found.');
+            return response()->json(['error' => ['message' => 'User from ID not found.']], 422);
+        }
+        $user->delete();
+ 
+        return response()->json(['success' => ['message' => 'User deleted.']]);
+    }
+  
+    public function listRoles($id){
+
         if(! $user = Sentinel::findById($id)){
-            return response()->json(['error' => 'user_not_found']);
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('User from ID not found.');
+            return response()->json(['error' => ['message' => 'User from ID not found.']], 422);
         }
 
 
 
-        return response()->json( $user->getRoles());
+        return response()->json([
+            'success' => ['message' => 'Roles listed.'],
+            'roles' => $user->getRoles(),
+        ]);
+        //return response()->json( $user->getRoles());
 
     }
 
@@ -201,39 +237,58 @@ class UserController extends Controller
         
        
         if(! $user = Sentinel::findById($id)){
-            return response()->json(['error' => 'user_not_found']);
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('User from ID not found.');
+            return response()->json(['error' => ['message' => 'User from ID not found.']], 422);
         }
         if(! $role = Sentinel::findRoleById($roleid)){
-            return response()->json(['error' => 'role_not_found']);
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('Role from ID not found.');
+            return response()->json(['error' => ['message' => 'Role from ID not found.']], 422);
         }
 
 
         if(!$user->inRole($role)){
             $role->users()->attach($user);
+            if(! $user = Sentinel::findById($id)){ //update user variable after addign role
+                return response()->json(['error' => ['message' => 'User from ID not found.']], 422);
+            }
         }
-
 
         //return response()->json( $user->getRoles());
         //return response()->json( $role->getUsers());
 
-        return response()->json(['success' => 'role_assigned']);
+        return response()->json([
+            'success' => ['message' => 'Role assigned.'],
+            'roles' => $user->getRoles(),
+        ]);
+        //return response()->json(['success' => 'role_assigned']);
     }
 
      public function removeRole($id, $roleid){
         
        
         if(! $user = Sentinel::findById($id)){
-            return response()->json(['error' => 'user_not_found']);
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('User from ID not found.');
+            return response()->json(['error' => ['message' => 'User from ID not found.']], 422);
         }
         if(! $role = Sentinel::findRoleById($roleid)){
-            return response()->json(['error' => 'role_not_found']);
+            //throw new \Dingo\Api\Exception\StoreResourceFailedException('Role from ID not found.');
+            return response()->json(['error' => ['message' => 'Role from ID not found.']], 422);
         }
+
 
         if($user->inRole($role)){
             $role->users()->detach($user);
+            if(! $user = Sentinel::findById($id)){ //update user variable after addign role
+                return response()->json(['error' => ['message' => 'User from ID not found.']], 422);
+            }
         }
 
-        return response()->json(['success' => 'role_removed']);
+
+        return response()->json([
+            'success' => ['message' => 'Role removed.'],
+            'roles' => $user->getRoles(),
+        ]);
+        //return response()->json(['success' => 'role_removed']);
     }
   
 }

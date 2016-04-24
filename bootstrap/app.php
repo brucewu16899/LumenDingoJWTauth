@@ -23,9 +23,9 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
- $app->withFacades();
+$app->withFacades();
 
- $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +93,67 @@ $app->register(Barryvdh\Cors\LumenServiceProvider::class);
 if ( ! $app->environment('production')) {
     $app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 }
+
+
+//////////// DINGO API Exception handlers    //////////////
+use Illuminate\Http\Response;
+
+$app['Dingo\Api\Exception\Handler']->setErrorFormat([
+    'error' => [
+        'message' => ':message',
+        'errors' => ':errors',
+        // 'code' => ':code',
+        //'status_code' => ':status_code',
+        'debug' => ':debug'
+    ]
+]);
+
+/*app('Dingo\Api\Exception\Handler')->register(function (Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception) {
+    return ['error' => ['message' => 'route_not_found']];
+});*/
+
+app('Dingo\Api\Exception\Handler')->register(function (Symfony\Component\HttpKernel\Exception\BadRequestHttpException $exception) {
+    return ['error' => ['message' => $exception->getMessage()]];
+});
+
+app('Dingo\Api\Exception\Handler')->register(function (Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception) {
+    return ['error' => ['message' => $exception->getMessage()]];
+});
+
+
+
+///////// Possible JWT-errors ///// 
+/*
+\Tymon\JWTAuth\Exceptions\InvalidClaimException
+'Invalid value provided for claim "'.$this->getName().'"
+
+Tymon\JWTAuth\Exception\JWTException
+'An error occurred'
+'The token could not be parsed from the request'
+'A token is required'
+'Could not create token: '
+
+Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+'Token not provided'
+
+Tymon\JWTAuth\Exceptions\TokenBlacklistedException
+'The token has been blacklisted'
+
+Tymon\JWTAuth\Exceptions\TokenInvalidException
+'Could not decode token: '
+'Token Signature could not be verified.'
+'JWT payload does not contain the required claims'
+'Not Before (nbf) timestamp cannot be in the future'
+'Issued At (iat) timestamp cannot be in the future'
+'Wrong number of segments'
+'Malformed token'
+
+\Tymon\JWTAuth\Exceptions\TokenExpiredException
+'Token has expired'
+'Token has expired and can no longer be refreshed'
+
+
+*/
 
 /*
 |--------------------------------------------------------------------------
