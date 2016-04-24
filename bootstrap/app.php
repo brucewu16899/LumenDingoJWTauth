@@ -74,6 +74,10 @@ $app->singleton(
  ]);
  */
 
+ $app->routeMiddleware([
+    'role' => App\Http\Middleware\RoleMiddleware::class,
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
