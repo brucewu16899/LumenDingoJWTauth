@@ -16,6 +16,11 @@ $api->version('v1', function($api) {
 
     $api->post('auth', 'App\Http\Controllers\Api\V1\AuthController@login');			// Authenticate
     $api->get('auth', 'App\Http\Controllers\Api\V1\AuthController@logout');			// Deauthenticate
+	$api->group(['middleware' => ['jwt.renew']], function ($api) {
+		$api->get('auth/refresh', function(){
+			 return response()->json(['success' => ['message' => 'User token refreshed.']]);
+		});
+	});
 
     ///////// 	 		User		 /////////
     $api->post('user', 'App\Http\Controllers\Api\V1\UserController@create'); 		// Register account
@@ -24,6 +29,7 @@ $api->version('v1', function($api) {
         $api->get('user', 'App\Http\Controllers\Api\V1\UserController@get');		// OBTAIN user info by token
 	    $api->put('user', 'App\Http\Controllers\Api\V1\UserController@update');		// EDIT user info by token
     });
+
 
 
     ///////////////////////// ADMINISTRATIVE /////////////////////////

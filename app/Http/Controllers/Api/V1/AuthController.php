@@ -69,10 +69,12 @@ class AuthController extends Controller
             //return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
+        return response()->json(['success' => ['message' => 'User token created.']])->header('Authorization', 'Bearer '.$token);
+        /*
         return response()->json([
             'success' => ['message' => 'User token created.'],
             'token' => $token,
-        ]);
+        ]); */
         //return response()->json([compact('token'), $user]);
         //return response()->json(compact('token'));
     }
