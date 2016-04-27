@@ -226,12 +226,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/NicksonYap/dingo-api.git",
-                "reference": "3b7ff36e58b82893f986854db972c5cc6f40384c"
+                "reference": "6c684e63ffb6b64170dcc088dd14a655ec1a6442"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NicksonYap/dingo-api/zipball/3b7ff36e58b82893f986854db972c5cc6f40384c",
-                "reference": "3b7ff36e58b82893f986854db972c5cc6f40384c",
+                "url": "https://api.github.com/repos/NicksonYap/dingo-api/zipball/6c684e63ffb6b64170dcc088dd14a655ec1a6442",
+                "reference": "6c684e63ffb6b64170dcc088dd14a655ec1a6442",
                 "shasum": ""
             },
             "require": {
@@ -301,7 +301,7 @@
             "support": {
                 "source": "https://github.com/NicksonYap/dingo-api/tree/multiRLK"
             },
-            "time": "2016-04-27 16:20:07"
+            "time": "2016-04-27 17:15:04"
         },
         {
             "name": "dingo/blueprint",
