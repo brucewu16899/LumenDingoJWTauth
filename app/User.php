@@ -8,7 +8,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends EloquentUser implements JWTSubject
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getJWTIdentifier()
     {
@@ -16,11 +16,10 @@ class User extends EloquentUser implements JWTSubject
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getJWTCustomClaims()
     {
         return [];
     }
-
 }

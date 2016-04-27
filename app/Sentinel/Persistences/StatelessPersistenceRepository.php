@@ -8,7 +8,7 @@ use Cartalyst\Sentinel\Persistences\PersistenceRepositoryInterface;
 class StatelessPersistenceRepository implements PersistenceRepositoryInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function check()
     {
@@ -16,7 +16,7 @@ class StatelessPersistenceRepository implements PersistenceRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function findByPersistenceCode($code)
     {
@@ -24,7 +24,7 @@ class StatelessPersistenceRepository implements PersistenceRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function findUserByPersistenceCode($code)
     {
@@ -32,7 +32,7 @@ class StatelessPersistenceRepository implements PersistenceRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function persist(PersistableInterface $persistable, $remember = false)
     {
@@ -40,7 +40,7 @@ class StatelessPersistenceRepository implements PersistenceRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function persistAndRemember(PersistableInterface $persistable)
     {
@@ -48,27 +48,24 @@ class StatelessPersistenceRepository implements PersistenceRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function forget()
     {
-        return null;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function remove($code)
     {
-        return null;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function flush(PersistableInterface $persistable, $forget = true)
     {
         // intentionally left blank
     }
-
 }

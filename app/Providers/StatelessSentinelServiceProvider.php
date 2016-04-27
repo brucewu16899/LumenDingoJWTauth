@@ -23,7 +23,7 @@ class StatelessSentinelServiceProvider extends SentinelServiceProvider
      */
     protected function registerPersistences()
     {
-        /**
+        /*
          * Dropping session and cookie registration since Lumen 5.2+ (stateless) does not include
          * `session.store` and `cookie`
          */
@@ -33,8 +33,8 @@ class StatelessSentinelServiceProvider extends SentinelServiceProvider
         $this->app->singleton('sentinel.persistence', function ($app) {
             $config = $app['config']->get('cartalyst.sentinel');
 
-            $model  = array_get($config, 'persistences.model');
-            $users  = array_get($config, 'users.model');
+            $model = array_get($config, 'persistences.model');
+            $users = array_get($config, 'users.model');
 
             if (class_exists($users) && method_exists($users, 'setPersistencesModel')) {
                 forward_static_call_array([$users, 'setPersistencesModel'], [$model]);

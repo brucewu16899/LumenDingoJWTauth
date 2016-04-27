@@ -69,7 +69,7 @@ $app->singleton(
 
 /*$app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
-	'jwt.auth' => 'Tymon\JWTAuth\Middleware\Authenticate',
+    'jwt.auth' => 'Tymon\JWTAuth\Middleware\Authenticate',
     'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
  ]);
  */
@@ -94,21 +94,20 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 $app->register(Barryvdh\Cors\LumenServiceProvider::class);
 
-if ( ! $app->environment('production')) {
+if (!$app->environment('production')) {
     $app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 }
-
 
 //////////// DINGO API Exception handlers    //////////////
 
 $app['Dingo\Api\Exception\Handler']->setErrorFormat([
     'error' => [
         'message' => ':message',
-        'errors' => ':errors',
+        'errors'  => ':errors',
         // 'code' => ':code',
         //'status_code' => ':status_code',
-        'debug' => ':debug'
-    ]
+        'debug' => ':debug',
+    ],
 ]);
 
 /*app('Dingo\Api\Exception\Handler')->register(function (Symfony\Component\HttpKernel\Exception\NotFoundHttpException $exception) {
@@ -123,9 +122,7 @@ app('Dingo\Api\Exception\Handler')->register(function (Symfony\Component\HttpKer
     return ['error' => ['message' => $exception->getMessage()]];
 });
 
-
-
-///////// Possible JWT-errors ///// 
+///////// Possible JWT-errors /////
 /*
 \Tymon\JWTAuth\Exceptions\InvalidClaimException
 'Invalid value provided for claim "'.$this->getName().'"
@@ -161,28 +158,26 @@ Tymon\JWTAuth\Exceptions\TokenInvalidException
 ///////// Dingo API Rate Limiter Key /////////
 
 app('Dingo\Api\Http\RateLimit\Handler')->setRateLimiter(function ($app, $request) {
-	
-	$clientIP = 'IP' . $request->getClientIp();
 
-	try {
-		if ($user = $app['tymon.jwt.auth']->parseToken()->authenticate()) {
-        	$userID =  'ID' . $user->id;
-		}
+    $clientIP = 'IP'.$request->getClientIp();
+
+    try {
+        if ($user = $app['tymon.jwt.auth']->parseToken()->authenticate()) {
+            $userID = 'ID'.$user->id;
+        }
     } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
     } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
     } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $e) {
     } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
     }
 
-    if(isset($userID)){
-    	return array($clientIP, $userID);
-    }else{
-    	return $clientIP;
+    if (isset($userID)) {
+        return [$clientIP, $userID];
+    } else {
+        return $clientIP;
     }
 
 });
-
-
 
 /*
 |--------------------------------------------------------------------------
