@@ -57,7 +57,7 @@ return [
     |
     */
 
-    'prefix' => env('API_PREFIX', null),
+    'prefix' => env('API_PREFIX', 'api'),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'name' => env('API_NAME', null),
+    'name' => env('API_NAME', 'Sage Caster API'),
 
     /*
     |--------------------------------------------------------------------------
@@ -146,19 +146,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | API Middleware
-    |--------------------------------------------------------------------------
-    |
-    | Middleware that will be applied globally to all API requests.
-    |
-    */
-
-    'middleware' => [
-
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Authentication Providers
     |--------------------------------------------------------------------------
     |
@@ -168,7 +155,8 @@ return [
     */
 
     'auth' => [
-
+        'basic' => Dingo\Api\Auth\Provider\Basic::class,
+        'jwt' => Dingo\Api\Auth\Provider\JWT::class,
     ],
 
     /*

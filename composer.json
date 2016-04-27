@@ -5,6 +5,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/NicksonYap/sentinel.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/NicksonYap/dingo-api.git"
         }
     ],
     "require": {
@@ -12,7 +16,7 @@
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "~2.2",
         "cartalyst/sentinel": "dev-hidepassword",
-        "dingo/api": "1.0.x@dev",
+        "dingo/api": "dev-multiRLK",
         "tymon/jwt-auth": "dev-develop",
         "barryvdh/laravel-cors": "^0.8.0"
     },

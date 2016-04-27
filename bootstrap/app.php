@@ -158,6 +158,32 @@ Tymon\JWTAuth\Exceptions\TokenInvalidException
 
 */
 
+///////// Dingo API Rate Limiter Key /////////
+
+app('Dingo\Api\Http\RateLimit\Handler')->setRateLimiter(function ($app, $request) {
+	
+	$clientIP = 'IP' . $request->getClientIp();
+
+	try {
+		if ($user = $app['tymon.jwt.auth']->parseToken()->authenticate()) {
+        	$userID =  'ID' . $user->id;
+		}
+    } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+    } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+    } catch (\Tymon\JWTAuth\Exceptions\TokenBlacklistedException $e) {
+    } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+    }
+
+    if(isset($userID)){
+    	return array($clientIP, $userID);
+    }else{
+    	return $clientIP;
+    }
+
+});
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
