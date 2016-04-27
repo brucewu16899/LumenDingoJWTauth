@@ -14,9 +14,12 @@ $api->version('v1', function($api) {
 	
 	///////////////////////// OPEN /////////////////////////
 
-    $api->post('auth', 'App\Http\Controllers\Api\V1\AuthController@login');			// Authenticate
+	$api->group(['middleware' => 'api.throttle',  'limit' => 10, 'expires' => 3], function ($api) {
+    	$api->post('auth', 'App\Http\Controllers\Api\V1\AuthController@login');			// Authenticate
+    });
+
     $api->get('auth', 'App\Http\Controllers\Api\V1\AuthController@logout');			// Deauthenticate
-	$api->group(['middleware' => ['jwt.renew']], function ($api) {
+	$api->group(['middleware' => 'jwt.renew'], function ($api) {
 		$api->get('auth/refresh', function(){
 			 return response()->json(['success' => ['message' => 'User token refreshed.']]);
 		});

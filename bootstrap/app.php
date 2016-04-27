@@ -100,7 +100,6 @@ if ( ! $app->environment('production')) {
 
 
 //////////// DINGO API Exception handlers    //////////////
-use Illuminate\Http\Response;
 
 $app['Dingo\Api\Exception\Handler']->setErrorFormat([
     'error' => [
