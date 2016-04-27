@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
-
 //use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider

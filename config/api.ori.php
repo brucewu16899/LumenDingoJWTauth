@@ -137,11 +137,11 @@ return [
     */
 
     'errorFormat' => [
-        'message' => ':message',
-        'errors' => ':errors',
-        'code' => ':code',
+        'message'     => ':message',
+        'errors'      => ':errors',
+        'code'        => ':code',
         'status_code' => ':status_code',
-        'debug' => ':debug',
+        'debug'       => ':debug',
     ],
 
     /*
@@ -156,7 +156,7 @@ return [
 
     'auth' => [
         'basic' => Dingo\Api\Auth\Provider\Basic::class,
-        'jwt' => Dingo\Api\Auth\Provider\JWT::class,
+        'jwt'   => Dingo\Api\Auth\Provider\JWT::class,
     ],
 
     /*
