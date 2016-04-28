@@ -25,7 +25,7 @@ class RoleMiddleware
         if ($user->inRole($role)) {
             return $next($request);
         } else {
-            return response()->json(['error' => ['message' => 'Not authorised as role: '. $role]], 401);
+            return response()->json(['error' => ['message' => 'Not authorised as role: '.$role]], 401);
         }
     }
 }
