@@ -183,7 +183,7 @@ return [
     */
 
     'throttling' => [
-    
+
     ],
 
     /*

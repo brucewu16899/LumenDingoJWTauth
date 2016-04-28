@@ -4,6 +4,7 @@
 $app->get('/', function () use ($app) {
     //return $app->version();
     $throttle = new GroupThrottle(['limit' => 100]);
+
     return $throttle->getLimit();
 });
 
