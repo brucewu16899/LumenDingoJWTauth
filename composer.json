@@ -16,7 +16,7 @@
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "~2.2",
         "cartalyst/sentinel": "dev-hidepassword",
-        "dingo/api": "dev-multiRLK",
+        "dingo/api": "dev-master",
         "tymon/jwt-auth": "dev-develop",
         "barryvdh/laravel-cors": "^0.8.0"
     },

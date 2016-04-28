@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dbb2e1ffa7e737010086ebfbf369919e",
-    "content-hash": "7f82effe05d19faa06184c838477c27b",
+    "hash": "bf66ae0c7b273fe9e2bd0b190d29ede4",
+    "content-hash": "9955cd95e88b4b7a0b20b4a8ec06224a",
     "packages": [
         {
             "name": "barryvdh/laravel-cors",
@@ -222,16 +222,16 @@
         },
         {
             "name": "dingo/api",
-            "version": "dev-multiRLK",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NicksonYap/dingo-api.git",
-                "reference": "64be6ac26df88b4f57f8b61541edc005be8dfa2d"
+                "reference": "07b27d17fb06ce1ac0a6174bdabec25315ffcf0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NicksonYap/dingo-api/zipball/64be6ac26df88b4f57f8b61541edc005be8dfa2d",
-                "reference": "64be6ac26df88b4f57f8b61541edc005be8dfa2d",
+                "url": "https://api.github.com/repos/NicksonYap/dingo-api/zipball/07b27d17fb06ce1ac0a6174bdabec25315ffcf0f",
+                "reference": "07b27d17fb06ce1ac0a6174bdabec25315ffcf0f",
                 "shasum": ""
             },
             "require": {
@@ -299,9 +299,9 @@
                 "restful"
             ],
             "support": {
-                "source": "https://github.com/NicksonYap/dingo-api/tree/multiRLK"
+                "source": "https://github.com/NicksonYap/dingo-api/tree/master"
             },
-            "time": "2016-04-28 12:57:43"
+            "time": "2016-04-28 14:47:21"
         },
         {
             "name": "dingo/blueprint",

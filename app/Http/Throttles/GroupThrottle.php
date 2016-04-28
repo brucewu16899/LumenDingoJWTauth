@@ -17,4 +17,18 @@ class GroupThrottle extends Throttle
 
         return true;
     }
+
+	/**
+     * Define throttle groups conditonally.
+     *
+     * @return void
+     */
+    public function group(){
+        return function ($app, $request) {
+
+		    return null;
+		};
+    }
+
+
 }

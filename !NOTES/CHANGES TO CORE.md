@@ -136,3 +136,11 @@ to
 
 
 Run command `composer dump-autoload`
+
+### 2016/04/27 Dingo API enable grouping custom throttles
+
+Implementation made in GitHub fork, [commit link](https://github.com/NicksonYap/dingo-api/commit/07b27d17fb06ce1ac0a6174bdabec25315ffcf0f)
+
+Changed line 19 `"dingo/api": "dev-multiRLK",` to `"dingo/api": "dev-master",`
+
+Run command `composer update dingo/api`
