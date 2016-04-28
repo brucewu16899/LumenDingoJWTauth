@@ -31,9 +31,6 @@
         },
         "files": [
             "app/helpers.php"
-        ],
-        "classmap": [
-            "app/Http/Throttles/"
         ]
     },
     "autoload-dev": {

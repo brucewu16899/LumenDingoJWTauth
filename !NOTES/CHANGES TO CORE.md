@@ -144,3 +144,37 @@ Implementation made in GitHub fork, [commit link](https://github.com/NicksonYap/
 Changed line 19 `"dingo/api": "dev-multiRLK",` to `"dingo/api": "dev-master",`
 
 Run command `composer update dingo/api`
+
+### 2016/04/28 More convenient Dingo API custom throttles autoload
+
+In local `composer.json`
+
+Line 28, from:
+
+
+```json
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ],
+        "classmap": [
+            "app/Http/Throttles/"
+        ]
+    },
+```
+to:
+
+
+```json
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    },
+```

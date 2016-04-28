@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Throttles;
+
 use Illuminate\Container\Container;
 use Dingo\Api\Http\RateLimit\Throttle\Throttle;
 
