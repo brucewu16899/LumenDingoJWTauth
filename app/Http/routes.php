@@ -2,7 +2,9 @@
 
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+    //return $app->version();
+    $throttle = new GroupThrottle(['limit' => 100]);
+    return $throttle->getLimit();
 });
 
 $api = app('Dingo\Api\Routing\Router');
@@ -14,7 +16,9 @@ $api->version('v1', function ($api) {
 
     ///////////////////////// OPEN /////////////////////////
 
-    $api->group(['middleware' => 'api.throttle',  'limit' => 10, 'expires' => 3], function ($api) {
+    //$api->group(['middleware' => 'api.throttle',  'limit' => 10, 'expires' => 1], function ($api) {
+    //$api->group(['middleware' => 'api.throttle', 'throttle' => 'GroupThrottle'], function ($api) {
+    $api->group(['middleware' => 'api.throttle'], function ($api) {
         $api->post('auth', 'App\Http\Controllers\Api\V1\AuthController@login');            // Authenticate
 
         $api->get('auth', 'App\Http\Controllers\Api\V1\AuthController@logout');            // Deauthenticate

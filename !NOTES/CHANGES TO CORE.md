@@ -101,3 +101,38 @@ to
 Copy `vendor/dingo/api/config.api.php` to `config/api.php`
 
 Run command `composer update dingo/api`
+
+### 2016/04/28 Dingo API custom throttles autoload
+
+In local `composer.json`
+
+Line 28, from:
+
+```json
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    },
+```
+to
+
+```json
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ],
+        "classmap": [
+            "app/Http/Throttles/"
+        ]
+    },
+```
+
+
+Run command `composer dump-autoload`

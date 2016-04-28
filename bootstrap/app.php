@@ -180,6 +180,19 @@ app('Dingo\Api\Http\RateLimit\Handler')->setRateLimiter(function ($app, $request
 });
 
 /*
+app('Dingo\Api\Http\RateLimit\Handler')->setRateLimiter(function ($app, $request) {
+
+    $clientIP = 'IP'.$request->getClientIp();
+
+    return $clientIP;
+
+});*/
+
+
+///////// Dingo Api custom throttles ////////////
+app('Dingo\Api\Http\RateLimit\Handler')->extend(new GroupThrottle(['limit' => 300, 'expires' => 10]));
+
+/*
 |--------------------------------------------------------------------------
 | Load The Application Routes
 |--------------------------------------------------------------------------
