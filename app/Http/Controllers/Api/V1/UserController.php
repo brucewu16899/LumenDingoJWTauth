@@ -124,7 +124,7 @@ class UserController extends Controller
             throw new \Dingo\Api\Exception\StoreResourceFailedException('Role from slug not found.');
             //return response()->json(['error' => ['message' => 'Role from slug not found.']], 422);
         }
-        
+
         $user = Sentinel::registerAndActivate($credentials);
         if (!$user->inRole($role)) {
             $role->users()->attach($user);
