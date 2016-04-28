@@ -2,12 +2,11 @@
 
 namespace App\Http\Throttles;
 
-use Illuminate\Container\Container;
 use Dingo\Api\Http\RateLimit\Throttle\Throttle;
+use Illuminate\Container\Container;
 
 class ExampleThrottle extends Throttle
 {
-	
     /**
      * Example throttle will be matched unconditionally.
      *
@@ -28,7 +27,8 @@ class ExampleThrottle extends Throttle
      *
      * @return void
      */
-    public function group(){
+    public function group()
+    {
         return function ($app, $request) {
 
             //return null to apply thottle globally

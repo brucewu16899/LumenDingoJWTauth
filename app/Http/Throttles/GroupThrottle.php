@@ -2,12 +2,11 @@
 
 namespace App\Http\Throttles;
 
-use Illuminate\Container\Container;
 use Dingo\Api\Http\RateLimit\Throttle\Throttle;
+use Illuminate\Container\Container;
 
 class GroupThrottle extends Throttle
 {
-
     /**
      * Group throttle will be matched unconditionally, including group of routes.
      *
@@ -15,22 +14,20 @@ class GroupThrottle extends Throttle
      *
      * @return bool
      */
-    public function match(Container $app){
-
+    public function match(Container $app)
+    {
         return true;
     }
 
-	/**
+    /**
      * Define throttle groups conditonally.
      *
      * @return void
      */
-    public function group(){
+    public function group()
+    {
         return function ($app, $request) {
 
-		    return null;
-		};
+        };
     }
-
-
 }
