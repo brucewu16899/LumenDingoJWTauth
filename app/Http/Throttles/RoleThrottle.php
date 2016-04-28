@@ -45,7 +45,7 @@ class RoleThrottle extends Throttle
     public function group()
     {
         return function ($app, $request) {
-            return null;
+            return md5($request->path());
         };
     }
 
