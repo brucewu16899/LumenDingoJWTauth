@@ -15,26 +15,17 @@ class RoleMiddleware
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $slug)
+    public function handle($request, Closure $next, $role)
     {
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             //throw new \Dingo\Api\Exception\StoreResourceFailedException('User from token not found.');
             return response()->json(['error' => ['message' => 'User from token not found.']], 422);
         }
 
-        $roleMatch = false;
-        $roles = $user->getRoles();
-        foreach ($roles as $role) {
-            if ($role->slug == $slug) {
-                $roleMatch = true;
-                break;
-            }
-        }
-
-        if ($roleMatch) {
+        if ($user->inRole($role)) {
             return $next($request);
         } else {
-            return response()->json(['error' => ['message' => 'Not authorised as role slug:'.$slug]]);
+            return response()->json(['error' => ['message' => 'Not authorised as role: '. $role]], 401);
         }
     }
 }

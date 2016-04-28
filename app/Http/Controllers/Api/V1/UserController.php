@@ -84,6 +84,8 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
+        $defaultRoleSlug = 'consumer';
+
         $credentials = $request->only(['email', 'password']);
 
         $rules = [
@@ -116,7 +118,17 @@ class UserController extends Controller
             'password' => $request->input('password'),
         ];*/
 
+        //create user and assign default role
+
+        if (!$role = Sentinel::findRoleBySlug($defaultRoleSlug)) {
+            throw new \Dingo\Api\Exception\StoreResourceFailedException('Role from slug not found.');
+            //return response()->json(['error' => ['message' => 'Role from slug not found.']], 422);
+        }
+        
         $user = Sentinel::registerAndActivate($credentials);
+        if (!$user->inRole($role)) {
+            $role->users()->attach($user);
+        }
 
         return response()->json([
             'success' => ['message' => 'User created.'],

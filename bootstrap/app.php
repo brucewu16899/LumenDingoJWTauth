@@ -189,7 +189,23 @@ app('Dingo\Api\Http\RateLimit\Handler')->setRateLimiter(function ($app, $request
 });*/
 
 ///////// Dingo Api custom throttles ////////////
-app('Dingo\Api\Http\RateLimit\Handler')->extend(new App\Http\Throttles\GroupThrottle(['limit' => 300, 'expires' => 10]));
+
+//if more than 1 throttles match, then the one with the higher limit will be used.
+
+app('Dingo\Api\Http\RateLimit\Handler')->extend(new App\Http\Throttles\GroupThrottle(['limit' => 10, 'expires' => 1]));
+
+
+app('Dingo\Api\Http\RateLimit\Handler')->extend(function(){
+    $throttle = new App\Http\Throttles\RoleThrottle(['limit' => 20, 'expires' => 1]);
+    $throttle->setOptions(['slugOrID' => 'consumer']);
+    return $throttle;
+});
+
+app('Dingo\Api\Http\RateLimit\Handler')->extend(function(){
+    $throttle = new App\Http\Throttles\RoleThrottle(['limit' => 30, 'expires' => 1]);
+    $throttle->setOptions(['slugOrID' => 'admin']);
+    return $throttle;
+});
 
 /*
 |--------------------------------------------------------------------------
