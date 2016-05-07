@@ -9,6 +9,8 @@ This is based on a [forked repository](https://github.com/edgji/lumengular)
 3. `composer install`
 4. Duplicate `.env.example` as `.env`
 5. Edit `.env` and configure secrets using [a generator](http://passwordsgenerator.net/)
+6. Set up databases and edit configuration in `.env`
+7. `php artisan migrate`
 
 ### Features:
 
